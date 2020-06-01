@@ -21,24 +21,24 @@ const Chat = () => {
   useAutoScroll(messagesRef);
 
   const messages = useSelector(selectMessages);
-  const { nickname } = useContext(UserContext);
+  const currentUser = useContext(UserContext);
   const currentChannelId = useSelector(selectCurrentChannelId);
 
   const sendMessage = useCallback(
-    async ({ message }, formApi) => {
-      const payload = { data: { attributes: { message, nickname } } };
+    async ({ message }, form) => {
+      const payload = { data: { attributes: { message, nickname: currentUser.nickname } } };
       const url = routes.channelMessagesPath(currentChannelId);
 
       try {
         const res = await post(url, payload);
-        formApi.resetForm();
+        form.resetForm();
         return res.data;
       } catch (error) {
-        const { message } = error;
-        formApi.setErrors({ message });
+        form.setErrors({ message: error.message });
+        return false;
       }
     },
-    [nickname, currentChannelId],
+    [currentUser.nickname, currentChannelId],
   );
 
   const form = useFormik({
@@ -52,7 +52,8 @@ const Chat = () => {
       <div className="overflow-auto mb-3" ref={messagesRef}>
         {messages.map(({ id, nickname, message }) => (
           <div key={id}>
-            <b>{nickname}:</b> {message}
+            <b>{`${nickname}: `}</b>
+            {message}
           </div>
         ))}
       </div>

@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { name } from 'faker';
 
-export const getNickname = (cookies = Cookies) => {
+const getCurrnentNickname = (cookies = Cookies) => {
   const savedNickname = cookies.get('nickname');
   if (savedNickname) {
     return savedNickname;
@@ -12,3 +12,5 @@ export const getNickname = (cookies = Cookies) => {
 
   return nickname;
 };
+
+export default getCurrnentNickname;

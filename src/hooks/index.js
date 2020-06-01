@@ -1,2 +1,2 @@
-export * from './use-messages-socket';
-export * from './use-auto-scroll';
+export { default as useMessagesSocket } from './use-messages-socket';
+export { default as useAutoScroll } from './use-auto-scroll';

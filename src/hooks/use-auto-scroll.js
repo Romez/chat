@@ -3,10 +3,15 @@ import { useSelector } from 'react-redux';
 
 import { selectMessages } from '../store';
 
-export const useAutoScroll = (messagesRef) => {
+const useAutoScroll = (messagesRef) => {
   const messages = useSelector(selectMessages);
 
   useEffect(() => {
-    messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    messagesRef.current.scrollTo({
+      top: messagesRef.current.scrollHeight,
+      behavior: 'smooth',
+    });
   }, [messagesRef, messages]);
 };
+
+export default useAutoScroll;

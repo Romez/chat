@@ -4,11 +4,12 @@ import socket from 'socket.io-client';
 
 import { actions } from '../slices';
 import debug from '../../lib/logger';
+
 const log = debug('WS');
 
 const wsConnection = socket('/', { autoConnect: false });
 
-export const useMessagesSocket = () => {
+const useMessagesSocket = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,3 +33,5 @@ export const useMessagesSocket = () => {
     };
   }, [dispatch]);
 };
+
+export default useMessagesSocket;

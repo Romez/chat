@@ -9,6 +9,7 @@ plugins:
   - react-hooks
 
 extends:
+  - airbnb
   - eslint:recommended
   - plugin:react/recommended
   - plugin:prettier/recommended

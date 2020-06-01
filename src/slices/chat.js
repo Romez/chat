@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import gon from 'gon';
 
@@ -7,6 +8,9 @@ const slice = createSlice({
   reducers: {
     addMessage: (state, { payload }) => {
       state.messages.push(payload);
+    },
+    switchToChannel: (state, { payload }) => {
+      state.currentChannelId = payload.channelId;
     },
   },
 });
