@@ -9,6 +9,9 @@ const slice = createSlice({
     addMessage: (state, { payload }) => {
       state.messages.push(payload);
     },
+    addChannel: (state, { payload }) => {
+      state.channels.push(payload);
+    },
     switchToChannel: (state, { payload }) => {
       state.currentChannelId = payload.channelId;
     },

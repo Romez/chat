@@ -9,6 +9,14 @@ export default i18n
         translation: {
           channels: {
             title: 'Channels',
+            add: 'Add',
+            modals: {
+              close: 'Close',
+              submit: 'Submit',
+              add: {
+                title: 'Add channel',
+              },
+            },
           },
         },
       },

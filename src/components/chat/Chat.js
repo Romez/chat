@@ -1,6 +1,6 @@
-import React, { memo, useContext, useRef, useCallback } from 'react';
+import React, { memo, useContext, useRef, useCallback, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { post } from 'axios';
@@ -8,6 +8,7 @@ import { post } from 'axios';
 import routes from '../../routes';
 import { UserContext } from '../../contexts/user';
 import { selectMessages, selectCurrentChannelId } from '../../store';
+import { actions } from '../../slices';
 import { useMessagesSocket, useAutoScroll } from '../../hooks';
 
 const validationSchema = Yup.object().shape({
@@ -15,7 +16,15 @@ const validationSchema = Yup.object().shape({
 });
 
 const Chat = () => {
-  useMessagesSocket();
+  const wsConnection = useMessagesSocket();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    wsConnection.on('newMessage', ({ data }) => {
+      const { attributes } = data;
+      dispatch(actions.addMessage(attributes));
+    });
+  }, [dispatch, wsConnection]);
 
   const messagesRef = useRef();
   useAutoScroll(messagesRef);
