@@ -3,7 +3,9 @@
 ### Requirements
 
 * [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
-* [App](https://slack-chat-romezzz.herokuapp.com)
+
+### App
+* [open](https://slack-chat-romezzz.herokuapp.com)
 
 ### Install
 

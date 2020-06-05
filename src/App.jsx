@@ -30,7 +30,7 @@ const App = () => {
               <Button onClick={showAddModal} className="mb-3" variant="outline-light">
                 {t('channels.add')}
               </Button>
-              <Channels />
+              <Channels showModal={showModal} />
             </Col>
             <Col className="h-100 pt-2">
               <Chat />

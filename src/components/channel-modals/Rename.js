@@ -1,9 +1,9 @@
-import React, { memo, useCallback, useRef, useEffect } from 'react';
-import { Modal, Button, Form, Spinner } from 'react-bootstrap';
+import React, { useRef, useEffect, useCallback } from 'react';
+import { Modal, Form, Button, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { post } from 'axios';
+import { patch } from 'axios';
 
 import routes from '../../routes';
 
@@ -11,16 +11,16 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
 });
 
-const AddModal = ({ hideModal }) => {
+const Rename = ({ hideModal, channel }) => {
   const { t } = useTranslation();
 
   const handleSubmit = useCallback(
     async ({ name }, form) => {
       const payload = { data: { attributes: { name } } };
-      const url = routes.channelsPath();
+      const url = routes.channelPath(channel.id);
 
       try {
-        await post(url, payload);
+        await patch(url, payload);
         hideModal();
         return true;
       } catch (error) {
@@ -28,25 +28,25 @@ const AddModal = ({ hideModal }) => {
         return false;
       }
     },
-    [hideModal],
+    [hideModal, channel.id],
   );
 
   const form = useFormik({
-    initialValues: { name: '' },
+    initialValues: { name: channel.name },
     onSubmit: handleSubmit,
     validationSchema,
   });
 
   const inputRef = useRef();
-
   useEffect(() => {
     inputRef.current.focus();
+    inputRef.current.select();
   }, [inputRef]);
 
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title>{t('channels.modals.add.title')}</Modal.Title>
+        <Modal.Title>{t('channels.modals.rename.title')}</Modal.Title>
       </Modal.Header>
 
       <Form onSubmit={form.handleSubmit}>
@@ -78,7 +78,7 @@ const AddModal = ({ hideModal }) => {
               aria-hidden="true"
               variant="info"
             />
-            {t(form.isSubmitting ? 'channels.modals.add.loading' : 'channels.modals.add.submit')}
+            {t(form.isSubmitting ? 'channels.modals.rename.loading' : 'channels.modals.rename.submit')}
           </Button>
         </Modal.Footer>
       </Form>
@@ -86,4 +86,4 @@ const AddModal = ({ hideModal }) => {
   );
 };
 
-export default memo(AddModal);
+export default Rename;
