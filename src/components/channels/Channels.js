@@ -54,7 +54,7 @@ const Channels = ({ showModal }) => {
         <Nav.Item key={id} as="btn-group">
           <Nav.Link eventKey={id}>
             <div className="d-flex justify-content-between align-items-center">
-              <div>{name}</div>
+              <div className="text-light">{name}</div>
               <div>
                 <Button
                   className="fas fa-edit rounded-circle"
