@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import gon from 'gon';
 
 import '../assets/application.scss';
-import './setupLocalization';
+import './utils/setupLocalization';
 import App from './App';
 
 if (process.env.NODE_ENV !== 'production') {

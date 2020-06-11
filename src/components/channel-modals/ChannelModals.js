@@ -11,10 +11,8 @@ const forms = {
   removing: Remove,
 };
 
-const getForm = (type) => forms[type];
-
 const ChannelModals = ({ type, hideModal, channel }) => {
-  const ModalForm = getForm(type);
+  const ModalForm = forms[type];
 
   return (
     <Modal autoFocus show={!!type} onHide={hideModal}>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectMessages } from '../store';
+import { selectMessages } from '../slices';
 
 const useAutoScroll = (messagesRef) => {
   const messages = useSelector(selectMessages);

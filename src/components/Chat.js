@@ -5,11 +5,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { post } from 'axios';
 
-import routes from '../../routes';
-import { UserContext } from '../../contexts/user';
-import { selectMessages, selectCurrentChannelId } from '../../store';
-import { actions } from '../../slices';
-import { useMessagesSocket, useAutoScroll } from '../../hooks';
+import routes from '../routes';
+import { UserContext } from '../contexts/user';
+import { actions, selectMessages, selectCurrentChannelId } from '../slices';
+import { useMessagesSocket, useAutoScroll } from '../hooks';
 
 const validationSchema = Yup.object().shape({
   message: Yup.string().required('Required'),

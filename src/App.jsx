@@ -3,10 +3,10 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Provider } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { store } from './store';
 import { UserProvider } from './contexts/user';
 import getCurrentNickname from './utils/getCurrentNickname';
 import { Channels, Chat, ChannelModals } from './components';
+import { store } from './slices';
 
 const App = () => {
   const { t } = useTranslation();

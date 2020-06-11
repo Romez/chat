@@ -2,9 +2,8 @@ import React, { memo, useEffect, useCallback } from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectChannels, selectCurrentChannelId } from '../../store';
-import { actions } from '../../slices';
-import { useMessagesSocket } from '../../hooks';
+import { actions, selectChannels, selectCurrentChannelId } from '../slices';
+import { useMessagesSocket } from '../hooks';
 
 const Channels = ({ showModal }) => {
   const wsConnection = useMessagesSocket();
