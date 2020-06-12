@@ -3,7 +3,7 @@ import { Nav, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { actions, selectChannels, selectCurrentChannelId } from '../slices';
-import { useMessagesSocket } from '../hooks';
+import useMessagesSocket from '../hooks/use-messages-socket';
 
 const Channels = ({ showModal }) => {
   const wsConnection = useMessagesSocket();

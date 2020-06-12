@@ -1,14 +1,15 @@
-import React, { memo, useContext, useRef, useCallback, useEffect } from 'react';
+import React, { memo, useContext, useRef, useCallback, useEffect, useLayoutEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { post } from 'axios';
+import useStayScrolled from 'react-stay-scrolled';
 
 import routes from '../routes';
 import { UserContext } from '../contexts/user';
 import { actions, selectMessages, selectCurrentChannelId } from '../slices';
-import { useMessagesSocket, useAutoScroll } from '../hooks';
+import useMessagesSocket from '../hooks/use-messages-socket';
 
 const validationSchema = Yup.object().shape({
   message: Yup.string().required('Required'),
@@ -25,12 +26,15 @@ const Chat = () => {
     });
   }, [dispatch, wsConnection]);
 
-  const messagesRef = useRef();
-  useAutoScroll(messagesRef);
-
   const messages = useSelector(selectMessages);
   const currentUser = useContext(UserContext);
   const currentChannelId = useSelector(selectCurrentChannelId);
+
+  const messagesRef = useRef();
+  const { stayScrolled } = useStayScrolled(messagesRef, { initialScroll: Infinity });
+  useLayoutEffect(() => {
+    stayScrolled();
+  }, [stayScrolled, messages.length]);
 
   const sendMessage = useCallback(
     async ({ message }, form) => {
