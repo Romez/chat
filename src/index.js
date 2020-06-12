@@ -7,6 +7,7 @@ import gon from 'gon';
 import '../assets/application.scss';
 import './utils/setupLocalization';
 import App from './App';
+import './api';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';

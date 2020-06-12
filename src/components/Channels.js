@@ -1,32 +1,13 @@
-import React, { memo, useEffect, useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { actions, selectChannels, selectCurrentChannelId } from '../slices';
-import useMessagesSocket from '../hooks/use-messages-socket';
 
 const Channels = ({ showModal }) => {
-  const wsConnection = useMessagesSocket();
   const dispatch = useDispatch();
   const channels = useSelector(selectChannels);
   const currentChannelId = useSelector(selectCurrentChannelId);
-
-  useEffect(() => {
-    wsConnection.on('newChannel', ({ data }) => {
-      const { attributes } = data;
-      dispatch(actions.addChannel(attributes));
-    });
-
-    wsConnection.on('renameChannel', ({ data }) => {
-      const { attributes } = data;
-      dispatch(actions.renameChannel(attributes));
-    });
-
-    wsConnection.on('removeChannel', ({ data }) => {
-      const { id } = data;
-      dispatch(actions.removeChannel({ id }));
-    });
-  }, [dispatch, wsConnection]);
 
   const switchToChannel = useCallback(
     (id) => {

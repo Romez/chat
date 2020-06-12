@@ -1,6 +1,6 @@
-import React, { memo, useContext, useRef, useCallback, useEffect, useLayoutEffect } from 'react';
+import React, { memo, useContext, useRef, useCallback, useLayoutEffect } from 'react';
 import { Form } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { post } from 'axios';
@@ -8,24 +8,13 @@ import useStayScrolled from 'react-stay-scrolled';
 
 import routes from '../routes';
 import { UserContext } from '../contexts/user';
-import { actions, selectMessages, selectCurrentChannelId } from '../slices';
-import useMessagesSocket from '../hooks/use-messages-socket';
+import { selectMessages, selectCurrentChannelId } from '../slices';
 
 const validationSchema = Yup.object().shape({
   message: Yup.string().required('Required'),
 });
 
 const Chat = () => {
-  const wsConnection = useMessagesSocket();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    wsConnection.on('newMessage', ({ data }) => {
-      const { attributes } = data;
-      dispatch(actions.addMessage(attributes));
-    });
-  }, [dispatch, wsConnection]);
-
   const messages = useSelector(selectMessages);
   const currentUser = useContext(UserContext);
   const currentChannelId = useSelector(selectCurrentChannelId);
