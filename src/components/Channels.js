@@ -2,7 +2,7 @@ import React, { memo, useCallback } from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { actions, selectChannels, selectCurrentChannelId } from '../slices';
+import { actions, selectChannels, selectCurrentChannelId } from '../store';
 
 const Channels = ({ showModal }) => {
   const dispatch = useDispatch();

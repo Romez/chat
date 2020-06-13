@@ -8,7 +8,7 @@ import useStayScrolled from 'react-stay-scrolled';
 
 import routes from '../routes';
 import { UserContext } from '../contexts/user';
-import { selectMessages, selectCurrentChannelId } from '../slices';
+import { selectMessages, selectCurrentChannelId } from '../store';
 
 const validationSchema = Yup.object().shape({
   message: Yup.string().required('Required'),
