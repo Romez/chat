@@ -29,6 +29,7 @@ const initWebSocket = (store) => {
   wsConnection.on('removeChannel', ({ data }) => {
     const { id } = data;
     store.dispatch(actions.removeChannel({ id }));
+    store.dispatch(actions.removeMessagesByChannelId({ channelId: id }));
   });
 
   wsConnection.on('newMessage', ({ data }) => {

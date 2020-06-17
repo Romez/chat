@@ -8,6 +8,9 @@ export const messagesSlice = createSlice({
     addMessage: (state, { payload }) => {
       state.push(payload);
     },
+    removeMessagesByChannelId: (state, { payload }) => {
+      return state.filter(({ channelId }) => channelId !== payload.channelId);
+    },
   },
 });
 
