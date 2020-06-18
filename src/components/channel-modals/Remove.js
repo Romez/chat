@@ -11,10 +11,11 @@ const Remove = ({ hideModal, channel }) => {
   const [formState, setFormState] = useState({ isSubmitting: false, error: '' });
 
   const handleSubmit = useCallback(async () => {
+    setFormState(() => ({ isSubmitting: true, error: '' }));
+
     const url = routes.channelPath(channel.id);
 
     try {
-      setFormState(() => ({ isSubmitting: true, error: '' }));
       await axios.delete(url);
       setFormState((state) => ({ ...state, isSubmitting: false }));
       hideModal();
