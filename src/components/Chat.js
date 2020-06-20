@@ -1,4 +1,4 @@
-import React, { memo, useContext, useRef, useCallback, useLayoutEffect } from 'react';
+import React, { useContext, useRef, useCallback, useLayoutEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
@@ -58,6 +58,7 @@ const Chat = () => {
           </div>
         ))}
       </div>
+
       <Form onSubmit={form.handleSubmit} className="mt-auto">
         <Form.Group>
           <Form.Control
@@ -67,11 +68,11 @@ const Chat = () => {
             onChange={form.handleChange}
             value={form.values.message}
           />
-          <Form.Control.Feedback type="invalid">{form.errors.message}</Form.Control.Feedback>
+          {form.errors.message && <Form.Control.Feedback type="invalid">{form.errors.message}</Form.Control.Feedback>}
         </Form.Group>
       </Form>
     </div>
   );
 };
 
-export default memo(Chat);
+export default Chat;

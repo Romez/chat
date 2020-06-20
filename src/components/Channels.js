@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -59,4 +59,4 @@ const Channels = ({ showModal }) => {
   );
 };
 
-export default memo(Channels);
+export default Channels;

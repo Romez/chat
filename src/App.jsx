@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
@@ -36,4 +36,4 @@ const App = () => {
   );
 };
 
-export default memo(App);
+export default App;
