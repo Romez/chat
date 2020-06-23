@@ -10,19 +10,24 @@ const Remove = ({ hideModal, channel }) => {
 
   const [formState, setFormState] = useState({ isSubmitting: false, error: '' });
 
-  const handleSubmit = useCallback(async () => {
-    setFormState(() => ({ isSubmitting: true, error: '' }));
+  const handleSubmit = useCallback(
+    async (event) => {
+      event.preventDefault();
 
-    const url = routes.channelPath(channel.id);
+      setFormState(() => ({ isSubmitting: true, error: '' }));
 
-    try {
-      await axios.delete(url);
-      setFormState((state) => ({ ...state, isSubmitting: false }));
-      hideModal();
-    } catch (error) {
-      setFormState(() => ({ isSubmitting: false, error: error.message }));
-    }
-  }, [channel.id, hideModal]);
+      const url = routes.channelPath(channel.id);
+
+      try {
+        await axios.delete(url);
+        setFormState((state) => ({ ...state, isSubmitting: false }));
+        hideModal();
+      } catch (error) {
+        setFormState(() => ({ isSubmitting: false, error: error.message }));
+      }
+    },
+    [channel.id, hideModal],
+  );
 
   return (
     <>

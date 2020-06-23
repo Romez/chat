@@ -2,19 +2,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import gon from 'gon';
 
-export const messagesSlice = createSlice({
-  name: 'messages',
-  initialState: gon.messages,
-  reducers: {
-    addMessage: (state, { payload }) => {
-      state.push(payload);
-    },
-    removeMessagesByChannelId: (state, { payload }) => {
-      return state.filter(({ channelId }) => channelId !== payload.channelId);
-    },
-  },
-});
-
 export const channelsSlice = createSlice({
   name: 'channels',
   initialState: {
@@ -34,6 +21,21 @@ export const channelsSlice = createSlice({
     },
     switchToChannel: (state, { payload }) => {
       state.currentChannelId = payload.channelId;
+    },
+  },
+});
+
+export const messagesSlice = createSlice({
+  name: 'messages',
+  initialState: gon.messages,
+  reducers: {
+    addMessage: (state, { payload }) => {
+      state.push(payload);
+    },
+  },
+  extraReducers: {
+    [channelsSlice.actions.removeChannel]: (state, { payload }) => {
+      return state.filter(({ channelId }) => channelId !== payload.id);
     },
   },
 });
