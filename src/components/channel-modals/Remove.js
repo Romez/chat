@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Modal, Form, Button, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useFormik } from 'formik';
 import axios from 'axios';
 
 import routes from '../../routes';
@@ -8,26 +9,24 @@ import routes from '../../routes';
 const Remove = ({ hideModal, channel }) => {
   const { t } = useTranslation();
 
-  const [formState, setFormState] = useState({ isSubmitting: false, error: '' });
-
   const handleSubmit = useCallback(
-    async (event) => {
-      event.preventDefault();
-
-      setFormState(() => ({ isSubmitting: true, error: '' }));
-
+    async (_, form) => {
       const url = routes.channelPath(channel.id);
 
       try {
         await axios.delete(url);
-        setFormState((state) => ({ ...state, isSubmitting: false }));
         hideModal();
       } catch (error) {
-        setFormState(() => ({ isSubmitting: false, error: error.message }));
+        form.setErrors(error.message);
       }
     },
     [channel.id, hideModal],
   );
+
+  const form = useFormik({
+    initialValues: {},
+    onSubmit: handleSubmit,
+  });
 
   return (
     <>
@@ -35,19 +34,19 @@ const Remove = ({ hideModal, channel }) => {
         <Modal.Title>{t('channels.modals.remove.title')}</Modal.Title>
       </Modal.Header>
 
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={form.handleSubmit}>
         <Modal.Body>
           <p>{t('channels.modals.remove.description')}</p>
-          <p className="text-danger">{formState.error}</p>
+          <p className="text-danger">{form.error}</p>
         </Modal.Body>
 
         <Modal.Footer>
           <Button variant="secondary" onClick={hideModal}>
             {t('channels.modals.close')}
           </Button>
-          <Button variant="danger" type="submit" disabled={formState.isSubmitting}>
+          <Button variant="danger" type="submit" disabled={form.isSubmitting}>
             <Spinner
-              hidden={!formState.isSubmitting}
+              hidden={!form.isSubmitting}
               as="span"
               animation="grow"
               size="sm"
@@ -55,7 +54,7 @@ const Remove = ({ hideModal, channel }) => {
               aria-hidden="true"
               variant="info"
             />
-            {t(formState.isSubmitting ? 'channels.modals.remove.loading' : 'channels.modals.remove.submit')}
+            {t(form.isSubmitting ? 'channels.modals.remove.loading' : 'channels.modals.remove.submit')}
           </Button>
         </Modal.Footer>
       </Form>
